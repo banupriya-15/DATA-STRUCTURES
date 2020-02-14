@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct tree{
+  int data;
+  struct tree*left;
+  struct tree*right;
+};
+typedef struct tree tree;
+struct tree*createNode(int a)
+{
+  tree* newnode=(tree*)malloc(sizeof(tree));
+  newnode->data=a;
+  newnode->left=NULL;
+  newnode->right=NULL;
+  return newnode;
+}
+void insert(tree*root,tree*node)
+{
+  if(root==NULL)
+   root=node;
+  else if(node->data > root->data)
+  {
+         if(root->right!=NULL)
+         {
+           insert(root->right,node);
+         }
+         else
+         {
+           root->right=node;
+         }
+  }
+else
+{
+  if(root->left!=NULL)
+         {
+           insert(root->left,node);
+         }
+         else
+         {
+           root->left=node;
+         }
+  
+}
+}
+void printPreorder(tree*root)
+{
+    if(root==NULL)
+       return;
+    
+    printf("%d ",root->data);
+    printPreorder(root->left);
+    printPreorder(root->right);
+    
+}
+void printPostorder(tree*root)
+{
+    if(root==NULL)
+       return;
+    printPostorder(root->left);
+    printf("%d ",root->data);
+    printPostorder(root->right);
+    
+}
+void printInorder(tree*root)
+{
+    if(root==NULL)
+       return;
+    
+    printf("%d ",root->data);
+    printInorder(root->left);
+    printInorder(root->right);
+    
+}
+int main() {
+  int n,a;
+  tree*root;
+  scanf("%d",&n);
+  for(int i=0;i<n;i++)
+  {
+    scanf("%d",&a);
+    if(i==0)
+      root=createNode(a);
+    else{
+      insert(root,createNode((a)));
+    }
+  }
+  printf("preorder\n");
+  printPreorder(root);
+  printf("\npostorder\n");
+  printPostorder(root);
+  printf("\n");
+  printf("inorder\n");
+  printInorder(root);
+}
